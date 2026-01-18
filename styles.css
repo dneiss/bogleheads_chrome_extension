@@ -10,3 +10,16 @@
   font-size: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
+
+/* Hover effects for interactive elements */
+#zebra-header:hover {
+  background: #3a6ab8 !important;
+}
+
+#zebra-picker button:hover {
+  background: #e8e8e8;
+}
+
+#zebra-picker label:has(input[type="checkbox"]):hover {
+  background: #e8e8e8;
+}
