@@ -1,5 +1,6 @@
 To release, run through this file with your AI agent
 
+# Ensure that the manifest description is less than 132 characters
 # Correct any typos in any txt or md files
 # Code review of all files for correctness, security, and performance and consider feedback
 # Update Description_full.txt for new/removed features and apply that to the Chrome extension site
