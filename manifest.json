@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Better Bogleheads",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "description": "Enhances the Bogleheads.org forum with visual controls. Bogleheads® is a registered service mark of The John C. Bogle Center for Financial Literacy.",
   "author": "David Neiss",
   "permissions": ["storage"],
