@@ -13,7 +13,7 @@ A Chrome extension that enhances the [Bogleheads.org](https://www.bogleheads.org
 
 All settings are saved and persist across sessions.
 
-## Installation
+## Installation (from repo)
 
 1. Download or clone this repository
 2. Open Chrome and navigate to `chrome://extensions/`
@@ -39,6 +39,7 @@ All settings are saved and persist across sessions.
 - **storage** - To save your preferences
 - **Host permission** - Only runs on bogleheads.org
 
-## License
+## License(s)
 
 MIT License - Feel free to modify and distribute.
+Bogleheads® is a registered service mark of The John C. Bogle Center for Financial Literacy
