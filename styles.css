@@ -28,3 +28,26 @@
   vertical-align: middle;
   margin-right: 4px;
 }
+
+#zebra-picker input[type="number"] {
+  width: 50px;
+  padding: 2px 4px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 11px;
+}
+
+#zebra-picker input[type="color"] {
+  border-radius: 3px;
+  border: 1px solid #ccc;
+}
+
+#zebra-picker label {
+  color: #666;
+}
+
+#zebra-picker input,
+#zebra-picker #font-size-display {
+  color: #333;
+  font-weight: 500;
+}

@@ -37,7 +37,7 @@
           '<label><input type="checkbox" id="highlight-hot"> Highlight hot topics</label>' +
         '</div>' +
         '<div style="margin-bottom: 6px; margin-left: 24px;">' +
-          '<label>Replies threshold: <input type="number" id="hot-threshold" min="1" max="1000" style="width: 60px;" value="' + DEFAULT_HOT_THRESHOLD + '"></label>' +
+          '<label>Replies threshold: <input type="number" id="hot-threshold" min="1" max="1000" value="' + DEFAULT_HOT_THRESHOLD + '"></label>' +
         '</div>' +
         '<div style="margin-bottom: 6px; margin-left: 24px;">' +
           '<label>Hot color: <input type="color" id="hot-color" value="' + DEFAULT_HOT_COLOR + '"></label>' +
@@ -47,7 +47,7 @@
           '<label><input type="checkbox" id="hide-old"> Hide old threads</label>' +
         '</div>' +
         '<div style="margin-bottom: 6px; margin-left: 24px;">' +
-          '<label>Max age (days): <input type="number" id="max-age-days" min="1" max="365" style="width: 60px;" value="30"></label>' +
+          '<label>Max age (days): <input type="number" id="max-age-days" min="1" max="365" value="30"></label>' +
         '</div>' +
         '<div style="border-top: 1px solid #e0e0e0; margin: 8px 0;"></div>' +
         '<div style="margin-bottom: 6px;">' +
