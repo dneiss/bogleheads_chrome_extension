@@ -55,4 +55,4 @@ If you have questions about this privacy policy, please open an issue on the Git
 
 ## Open Source
 
-This extension is open source. You can review the complete source code to verify these privacy practices.
+This extension is open source. You can review the complete source code to verify these privacy practices. The repo is https://github.com/dneiss/Better_Bogleheads
