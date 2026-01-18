@@ -24,7 +24,7 @@ All settings are saved automatically and persist across sessions.
 
 PRIVACY
 
-This extension only runs on bogleheads.org/index.php and stores your preferences locally using Chrome's storage API. No data is collected or transmitted.
+This extension only runs on https://bogleheads.org/ and stores your preferences locally using Chrome's storage API. No data is collected or transmitted.
 
 OPEN SOURCE
 

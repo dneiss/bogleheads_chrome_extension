@@ -29,7 +29,7 @@ All settings are saved and persist across sessions.
 
 ## Usage
 
-1. Navigate to https://www.bogleheads.org/index.php
+1. Navigate to https://bogleheads.org/
 2. The extension panel appears in the top-right corner
 3. Adjust settings as desired - changes apply immediately
 4. Click the title bar to collapse/expand the panel
