@@ -8,7 +8,7 @@ To release:
 # Update the marquee_promo_tile pics and apply them to the Chrome extension site
 # Verify text in README.md file is still current
 # Ensure PRIVACY_POLICY.md is still current
-# Ensure LICNESE is still current
+# Ensure LICENSE is still current
 
 # Create a release by running release.sh
 # Upload the files.zip release to Chrome extension site

@@ -3,7 +3,6 @@
   var DEFAULT_HOT_COLOR = '#ffeb3b';
   var DEFAULT_HOT_THRESHOLD = 50;
   var DEFAULT_FONT_SIZE = 100;
-  var DEFAULT_MAX_AGE_DAYS = 0;
 
   function init() {
     var table = document.getElementById('posts_table');
@@ -97,7 +96,6 @@
     }
 
     // Drag functionality
-    var isDragging = false;
     var dragStartX, dragStartY;
     var panelStartX, panelStartY;
     var hasDragged = false;
@@ -133,7 +131,6 @@
     }
 
     function onMouseUp(e) {
-      isDragging = false;
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
 
@@ -145,7 +142,6 @@
 
     zebraHeader.addEventListener('mousedown', function(e) {
       if (e.button !== 0) return;
-      isDragging = true;
       hasDragged = false;
       dragStartX = e.clientX;
       dragStartY = e.clientY;
@@ -310,6 +306,8 @@
       rows.forEach(function(row) {
         var links = row.querySelectorAll('td a[href*="viewtopic.php"]');
         links.forEach(function(link) {
+          if (link.dataset.tracked) return;
+          link.dataset.tracked = 'true';
           link.addEventListener('click', function() {
             var threadId = getThreadId(row);
             var lastPostId = getLastPostId(row);

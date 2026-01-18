@@ -24,6 +24,7 @@ The extension stores the following preferences locally on your device using Chro
 - Maximum thread age preference
 - Font size preference
 - Panel collapsed state
+- Panel position (if dragged)
 
 This data is stored locally and synced across your Chrome browsers if you are signed into Chrome. This data is **never** transmitted to any external servers or third parties.
 

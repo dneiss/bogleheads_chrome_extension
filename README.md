@@ -10,6 +10,7 @@ A Chrome extension that enhances the [Bogleheads.org](https://www.bogleheads.org
 - **Hide Old Threads** - Filter out threads older than a specified number of days
 - **Adjustable Font Size** - Increase or decrease the thread list font size (50% - 200%)
 - **Collapsible Panel** - Click the title bar to collapse/expand the settings panel
+- **Draggable Panel** - Drag the title bar to reposition the panel anywhere on screen
 
 All settings are saved and persist across sessions.
 
@@ -32,7 +33,7 @@ All settings are saved and persist across sessions.
 1. Navigate to https://bogleheads.org/
 2. The extension panel appears in the top-right corner
 3. Adjust settings as desired - changes apply immediately
-4. Click the title bar to collapse/expand the panel
+4. Click the title bar to collapse/expand, or drag to reposition
 
 ## Permissions
 
