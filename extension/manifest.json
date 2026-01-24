@@ -1,18 +1,26 @@
 {
   "manifest_version": 3,
   "name": "Better Bogleheads",
-  "version": "2.0.4",
+  "version": "2.1.0",
   "description": "Bogleheads site enhancements. Bogleheads® is a trademark of The John C. Bogle Center for Financial Literacy.",
   "author": "David Neiss",
-  "permissions": ["storage"],
+  "permissions": ["storage", "sidePanel", "tabs"],
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",
     "128": "icons/icon128.png"
   },
+  "action": {
+    "default_title": "Better Bogleheads"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
   "content_scripts": [{
     "matches": ["*://*.bogleheads.org/*"],
-    "js": ["content.js"],
-    "css": ["styles.css"]
+    "js": ["content.js"]
   }]
 }

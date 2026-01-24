@@ -4,7 +4,7 @@ set -e
 
 MANIFEST="extension/manifest.json"
 ZIP_NAME="bogleheads.zip"
-FILES_TO_ZIP="extension/manifest.json extension/content.js extension/styles.css extension/icons/icon16.png extension/icons/icon48.png extension/icons/icon128.png"
+FILES_TO_ZIP="extension/manifest.json extension/content.js extension/background.js extension/sidepanel.html extension/sidepanel.js extension/sidepanel.css extension/icons/icon16.png extension/icons/icon48.png extension/icons/icon128.png"
 
 # Check for required argument
 if [ -z "$1" ]; then
