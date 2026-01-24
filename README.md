@@ -1,6 +1,6 @@
 # Better Bogleheads
 
-A Chrome extension that enhances the [Bogleheads.org](https://www.bogleheads.org) home page with visual improvements and filtering options.
+A Chrome extension that enhances the [Bogleheads.org](https://www.bogleheads.org) forum with visual improvements and filtering options.
 
 ## Features
 
@@ -9,8 +9,6 @@ A Chrome extension that enhances the [Bogleheads.org](https://www.bogleheads.org
 - **Highlight Hot Topics** - Highlight threads with many replies (customizable threshold and color)
 - **Hide Old Threads** - Filter out threads older than a specified number of days
 - **Adjustable Font Size** - Increase or decrease the thread list font size (50% - 200%)
-- **Collapsible Panel** - Click the title bar to collapse/expand the settings panel
-- **Draggable Panel** - Drag the title bar to reposition the panel anywhere on screen
 
 All settings are saved and persist across sessions.
 
@@ -20,24 +18,29 @@ All settings are saved and persist across sessions.
 2. Open Chrome and navigate to `chrome://extensions/`
 3. Enable "Developer mode" (toggle in top right)
 4. Click "Load unpacked"
-5. Select the folder containing the extension files
+5. Select the `extension` folder
 
 ## Files
 
-- `manifest.json` - Extension configuration
-- `content.js` - Main extension logic
-- `styles.css` - Panel styling
+- `manifest.json` - Extension configuration (Manifest V3)
+- `content.js` - Applies enhancements to forum pages
+- `background.js` - Service worker that manages the side panel
+- `sidepanel.html` - Settings panel UI
+- `sidepanel.js` - Settings panel logic
+- `sidepanel.css` - Settings panel styling
+- `icons/` - Extension icons
 
 ## Usage
 
 1. Navigate to https://bogleheads.org/
-2. The extension panel appears in the top-right corner
+2. Click the extension icon in the Chrome toolbar to open the side panel
 3. Adjust settings as desired - changes apply immediately
-4. Click the title bar to collapse/expand, or drag to reposition
 
 ## Permissions
 
 - **storage** - To save your preferences
+- **sidePanel** - To display settings in Chrome's side panel
+- **tabs** - To detect when you're on a Bogleheads page
 - **Host permission** - Only runs on bogleheads.org
 
 ## License(s)
