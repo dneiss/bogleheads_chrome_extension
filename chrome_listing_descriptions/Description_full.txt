@@ -8,6 +8,9 @@ Add alternating row colors to the thread list for easier reading. Choose any col
 Hide Read Threads
 Automatically tracks threads you've clicked and lets you hide them. Threads reappear when new replies are posted, so you never miss new activity.
 
+Unread Badge
+Shows the count of unread threads on the extension icon. The badge color changes based on how many unread threads you have: green (1-20), yellow (21-60), or red (61+).
+
 Highlight Hot Topics
 Make popular threads stand out by highlighting threads above a customizable reply threshold. Choose your own highlight color.
 
