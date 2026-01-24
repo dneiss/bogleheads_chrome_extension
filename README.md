@@ -4,6 +4,7 @@ A Chrome extension that enhances the [Bogleheads.org](https://www.bogleheads.org
 
 ## Features
 
+- **Unread Badge** - Shows a red badge on the extension icon with the count of threads you haven't clicked yet
 - **Zebra Striping** - Alternating row colors for easier reading (customizable color)
 - **Hide Read Threads** - Automatically tracks threads you've clicked and can hide them. Threads reappear when new replies are posted.
 - **Highlight Hot Topics** - Highlight threads with many replies (customizable threshold and color)
@@ -11,6 +12,10 @@ A Chrome extension that enhances the [Bogleheads.org](https://www.bogleheads.org
 - **Adjustable Font Size** - Increase or decrease the thread list font size (50% - 200%)
 
 All settings are saved and persist across sessions.
+
+## Side Panel
+
+The extension uses Chrome's side panel for all controls. The panel automatically opens when you visit Bogleheads.org and slides out from the right side of the browser. You can also click the extension icon to toggle it. All settings in the panel apply immediately.
 
 ## Installation (from repo)
 

@@ -21,6 +21,7 @@
       applyFontSize(fontSize);
       applyFilters(readThreads);
       trackClicks(readThreads);
+      updateBadge(readThreads);
     });
   }
 
@@ -101,6 +102,19 @@
     table.style.setProperty('font-size', size + '%', 'important');
   }
 
+  function updateBadge(readThreads) {
+    if (!table) return;
+    var rows = getDataRows();
+    var unreadCount = 0;
+    for (var i = 0; i < rows.length; i++) {
+      var threadId = getThreadId(rows[i]);
+      if (threadId && !readThreads[threadId]) {
+        unreadCount++;
+      }
+    }
+    chrome.runtime.sendMessage({ type: 'updateBadge', unreadCount: unreadCount });
+  }
+
   function applyStripes(color) {
     if (!table) return;
     currentColor = color || currentColor;
@@ -178,6 +192,7 @@
           if (threadId && lastPostId) {
             readThreads[threadId] = lastPostId;
             chrome.storage.sync.set({ readThreads: readThreads });
+            updateBadge(readThreads);
           }
         });
       });
@@ -220,6 +235,7 @@
         var readThreads = result.readThreads || {};
         if (Array.isArray(readThreads)) readThreads = {};
         applyFilters(readThreads);
+        updateBadge(readThreads);
       });
     }
   });
