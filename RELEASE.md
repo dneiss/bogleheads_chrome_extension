@@ -7,7 +7,7 @@ To release, run through this file with your AI agent
 - Update Description_short.txt for shortened text and apply that to the Chrome extension site
 - Create any new screenshots in the Chrome_listing_screenshots and apply that to the Chrome extension site
 - Update the marquee_promo_tile pics and apply them to the Chrome extension site
-- Verify README.md file is still current
+- Verify README.md file is still current and in sync with @Description_full.txt
 - Ensure PRIVACY_POLICY.md is still current
 - Ensure LICENSE is still current
 - Ensure that there is no PII leakage into any files
