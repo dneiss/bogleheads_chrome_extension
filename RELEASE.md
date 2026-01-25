@@ -11,6 +11,23 @@ To release, run through this file with your AI agent
 - Ensure PRIVACY_POLICY.md is still current
 - Ensure LICENSE is still current
 - Ensure that there is no PII leakage into any files
-- Create a release by running release.sh and bump versions
-- Upload the files.zip release to Chrome extension site
+
+- Do a git commit with proper annotations:
+    feat
+    fix
+    perf
+    docs
+    refactor
+    style
+    test
+    chore
+    build
+    ci
+    revert
+
+- Create a release by running release.sh and bump the version
 - git tag with release version specified in the manifest.json file
+
+- Upload the files.zip release to Chrome extension site
+- git push and git push tags
+
