@@ -48,13 +48,15 @@
     if (!table) return;
 
     // Load settings and apply initial state
-    chrome.storage.sync.get(['stripeColor', 'hideRead', 'readThreads', 'highlightHot', 'hotThreshold', 'hotColor', 'fontSize', 'hideOld', 'maxAgeDays'], function(result) {
+    chrome.storage.sync.get(['stripeColor', 'hideRead', 'readThreads', 'highlightHot', 'hotThreshold', 'hotColor', 'fontSize', 'hideOld', 'maxAgeDays', 'pointerCursor'], function(result) {
       currentColor = result.stripeColor || DEFAULT_COLOR;
       var readThreads = result.readThreads || {};
       if (Array.isArray(readThreads)) readThreads = {};
       var fontSize = result.fontSize || DEFAULT_FONT_SIZE;
+      var pointerCursor = result.pointerCursor || false;
 
       applyFontSize(fontSize);
+      applyPointerCursor(pointerCursor);
       applyFilters(readThreads);
       trackClicks(readThreads);
       updateBadge(readThreads);
@@ -136,6 +138,15 @@
   function applyFontSize(size) {
     if (!table) return;
     table.style.setProperty('font-size', size + '%', 'important');
+  }
+
+  function applyPointerCursor(enabled) {
+    if (!table) return;
+    var rows = getDataRows();
+    var cursorStyle = enabled ? 'pointer' : '';
+    rows.forEach(function(row) {
+      row.style.cursor = cursorStyle;
+    });
   }
 
   function updateBadge(readThreads) {
@@ -265,6 +276,9 @@
 
     if (changes.fontSize) {
       applyFontSize(changes.fontSize.newValue || DEFAULT_FONT_SIZE);
+    }
+    if (changes.pointerCursor) {
+      applyPointerCursor(changes.pointerCursor.newValue || false);
     }
     if (changes.stripeColor) {
       currentColor = changes.stripeColor.newValue || DEFAULT_COLOR;

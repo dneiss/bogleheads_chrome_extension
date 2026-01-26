@@ -31,6 +31,7 @@
   var fontResetButton = document.getElementById('font-reset');
   var hideOldCheckbox = document.getElementById('hide-old');
   var maxAgeDaysInput = document.getElementById('max-age-days');
+  var pointerCursorCheckbox = document.getElementById('pointer-cursor');
 
   function updateReadCount(readThreads) {
     var count = Object.keys(readThreads).length;
@@ -43,7 +44,7 @@
   }
 
   // Load saved settings and apply to UI
-  chrome.storage.sync.get(['stripeColor', 'hideRead', 'readThreads', 'highlightHot', 'hotThreshold', 'hotColor', 'fontSize', 'hideOld', 'maxAgeDays'], function(result) {
+  chrome.storage.sync.get(['stripeColor', 'hideRead', 'readThreads', 'highlightHot', 'hotThreshold', 'hotColor', 'fontSize', 'hideOld', 'maxAgeDays', 'pointerCursor'], function(result) {
     var color = result.stripeColor || DEFAULT_COLOR;
     var hideRead = result.hideRead || false;
     var readThreads = result.readThreads || {};
@@ -54,6 +55,7 @@
     var fontSize = result.fontSize || DEFAULT_FONT_SIZE;
     var hideOld = result.hideOld || false;
     var maxAgeDays = result.maxAgeDays || 30;
+    var pointerCursor = result.pointerCursor || false;
 
     colorInput.value = color;
     hideReadCheckbox.checked = hideRead;
@@ -62,6 +64,7 @@
     hotColorInput.value = hotColor;
     hideOldCheckbox.checked = hideOld;
     maxAgeDaysInput.value = maxAgeDays;
+    pointerCursorCheckbox.checked = pointerCursor;
     applyFontSizeDisplay(fontSize);
     updateReadCount(readThreads);
   });
@@ -106,6 +109,10 @@
 
   maxAgeDaysInput.oninput = function() {
     chrome.storage.sync.set({ maxAgeDays: parseInt(this.value, 10) });
+  };
+
+  pointerCursorCheckbox.onchange = function() {
+    chrome.storage.sync.set({ pointerCursor: this.checked });
   };
 
   fontSizeInput.oninput = function() {
