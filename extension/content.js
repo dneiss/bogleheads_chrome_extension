@@ -8,6 +8,10 @@
   var currentColor = DEFAULT_COLOR;
   var darkStylesInjected = false;
 
+  // Time tracking variables
+  var timeTrackingInterval = null;
+  var isTracking = false;
+
   function injectDarkStyles() {
     if (darkStylesInjected) return;
     var style = document.createElement('style');
@@ -37,6 +41,70 @@
     }
   }
 
+  function saveTimeTracking() {
+    if (!isTracking) return;
+    var now = Date.now();
+    chrome.storage.sync.get(['timeTracking'], function(result) {
+      var tracking = result.timeTracking || {
+        totalSeconds: 0,
+        resetTimestamp: now,
+        lastUpdateTimestamp: now
+      };
+      tracking.totalSeconds += 30;
+      tracking.lastUpdateTimestamp = now;
+      chrome.storage.sync.set({ timeTracking: tracking });
+    });
+  }
+
+  function startTimeTracking() {
+    if (isTracking) return;
+    isTracking = true;
+    timeTrackingInterval = setInterval(saveTimeTracking, 30000);
+  }
+
+  function stopTimeTracking() {
+    if (!isTracking) return;
+    isTracking = false;
+    if (timeTrackingInterval) {
+      clearInterval(timeTrackingInterval);
+      timeTrackingInterval = null;
+    }
+  }
+
+  function initTimeTracking() {
+    // Initialize tracking data if it doesn't exist
+    chrome.storage.sync.get(['timeTracking'], function(result) {
+      if (!result.timeTracking) {
+        var now = Date.now();
+        chrome.storage.sync.set({
+          timeTracking: {
+            totalSeconds: 0,
+            resetTimestamp: now,
+            lastUpdateTimestamp: now
+          }
+        });
+      }
+    });
+
+    // Start tracking if tab is visible
+    if (document.visibilityState === 'visible') {
+      startTimeTracking();
+    }
+
+    // Handle visibility changes
+    document.addEventListener('visibilitychange', function() {
+      if (document.visibilityState === 'visible') {
+        startTimeTracking();
+      } else {
+        stopTimeTracking();
+      }
+    });
+
+    // Save on page unload
+    window.addEventListener('beforeunload', stopTimeTracking);
+    window.addEventListener('pagehide', stopTimeTracking);
+  }
+
   function init() {
     table = document.getElementById('posts_table');
 
@@ -44,6 +112,9 @@
     chrome.storage.sync.get(['theme'], function(result) {
       applyTheme(result.theme || 'light');
     });
+
+    // Start time tracking (works on all bogleheads.org pages)
+    initTimeTracking();
 
     if (!table) return;
 

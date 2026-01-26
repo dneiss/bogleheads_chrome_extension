@@ -32,10 +32,50 @@
   var hideOldCheckbox = document.getElementById('hide-old');
   var maxAgeDaysInput = document.getElementById('max-age-days');
   var pointerCursorCheckbox = document.getElementById('pointer-cursor');
+  var timeDisplayEl = document.getElementById('time-display');
+  var timeStatsEl = document.getElementById('time-stats');
+  var resetTimeButton = document.getElementById('reset-time');
 
   function updateReadCount(readThreads) {
     var count = Object.keys(readThreads).length;
     readCountSpan.textContent = '(' + count + ' read)';
+  }
+
+  function formatTime(seconds) {
+    var hours = Math.floor(seconds / 3600);
+    var minutes = Math.floor((seconds % 3600) / 60);
+    if (hours > 0) {
+      var hourText = hours === 1 ? '1 hour' : hours + ' hours';
+      if (minutes > 0) {
+        var minText = minutes === 1 ? '1 minute' : minutes + ' minutes';
+        return hourText + ' ' + minText;
+      }
+      return hourText;
+    }
+    return minutes === 1 ? '1 minute' : minutes + ' minutes';
+  }
+
+  function formatAvgTime(seconds, days) {
+    var avgSeconds = days > 0 ? seconds / days : 0;
+    var avgMinutes = avgSeconds / 60;
+    if (avgMinutes >= 60) {
+      return (avgMinutes / 60).toFixed(1) + ' hours/day';
+    }
+    return Math.round(avgMinutes) + ' minutes/day';
+  }
+
+  function updateTimeDisplay(tracking) {
+    if (!tracking) {
+      timeDisplayEl.textContent = '0 minutes';
+      timeStatsEl.textContent = '0 days tracked · 0 minutes/day';
+      return;
+    }
+    var now = Date.now();
+    var msPerDay = 24 * 60 * 60 * 1000;
+    var days = Math.max(1, Math.ceil((now - tracking.resetTimestamp) / msPerDay));
+
+    timeDisplayEl.textContent = formatTime(tracking.totalSeconds);
+    timeStatsEl.textContent = days + ' days tracked · ' + formatAvgTime(tracking.totalSeconds, days);
   }
 
   function applyFontSizeDisplay(size) {
@@ -69,6 +109,11 @@
     updateReadCount(readThreads);
   });
 
+  // Load time tracking data
+  chrome.storage.sync.get(['timeTracking'], function(result) {
+    updateTimeDisplay(result.timeTracking);
+  });
+
   // Listen for storage changes (e.g., read count updates from content script)
   chrome.storage.onChanged.addListener(function(changes, namespace) {
     if (namespace !== 'sync') return;
@@ -79,6 +124,9 @@
     }
     if (changes.theme) {
       applyTheme(changes.theme.newValue || 'light');
+    }
+    if (changes.timeTracking) {
+      updateTimeDisplay(changes.timeTracking.newValue);
     }
   });
 
@@ -142,6 +190,19 @@
     if (confirm('This will reset all threads to unread. Threads you previously viewed will no longer be hidden. Continue?')) {
       chrome.storage.sync.set({ readThreads: {} });
       updateReadCount({});
+    }
+  };
+
+  resetTimeButton.onclick = function() {
+    if (confirm('This will reset your tracked time to zero. Continue?')) {
+      var now = Date.now();
+      var newTracking = {
+        totalSeconds: 0,
+        resetTimestamp: now,
+        lastUpdateTimestamp: now
+      };
+      chrome.storage.sync.set({ timeTracking: newTracking });
+      updateTimeDisplay(newTracking);
     }
   };
 })();

@@ -23,6 +23,9 @@ Increase or decrease the thread list font size from 50% to 200% for comfortable 
 Pointer Cursor
 Enable a pointer cursor when hovering over thread rows to make them feel more clickable.
 
+Time Tracking
+See how much time you spend on Bogleheads.org. The side panel displays your total time, days tracked, and average time per day. Reset anytime to start fresh.
+
 Omnibox Commands
 Type "bh" in Chrome's address bar, press Tab, then use these shortcuts:
 • new - Go to active topics

@@ -125,6 +125,19 @@ button:hover {
   color: #2c5aa0;
 }
 
+.time-display {
+  font-size: 22px;
+  font-weight: bold;
+  color: #2c5aa0;
+  margin-bottom: 4px;
+}
+
+.time-stats {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 8px;
+}
+
 /* Dark theme styles */
 body.bh-dark {
   background: #1a1a1a;
@@ -179,4 +192,12 @@ body.bh-dark #read-count {
 
 body.bh-dark #font-size-display {
   color: #6db3f2;
+}
+
+body.bh-dark .time-display {
+  color: #6db3f2;
+}
+
+body.bh-dark .time-stats {
+  color: #a0aec0;
 }
