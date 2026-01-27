@@ -25,6 +25,13 @@ if [[ "$RELEASE_TYPE" != "major" && "$RELEASE_TYPE" != "minor" && "$RELEASE_TYPE
     exit 1
 fi
 
+# Check for uncommitted changes before proceeding
+if [ -n "$(git status --porcelain)" ]; then
+    echo "Error: Uncommitted changes detected. Please commit all changes before releasing."
+    git status --short
+    exit 1
+fi
+
 # Verify all required files exist before proceeding
 for file in $FILES_TO_ZIP; do
     if [ ! -f "$file" ]; then
@@ -107,3 +114,11 @@ rm -f "$ZIP_NAME"
 zip -r "$ZIP_NAME" $FILES_TO_ZIP
 
 echo "Created $ZIP_NAME with version $NEW_VERSION"
+
+# Commit manifest and create git tag if version was bumped
+if [ "$RELEASE_TYPE" != "none" ]; then
+    git add "$MANIFEST"
+    git commit -m "chore: Bump version to $NEW_VERSION"
+    git tag "v$NEW_VERSION"
+    echo "Committed version bump and created git tag v$NEW_VERSION"
+fi
