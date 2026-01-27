@@ -9,19 +9,25 @@ FILES_TO_ZIP="extension/manifest.json extension/content.js extension/background.
 # Check for required argument
 if [ -z "$1" ]; then
     echo "Error: Release type required."
-    echo "Usage: ./release.sh <major|minor|patch|none>"
+    echo "Usage: ./release.sh <major|minor|patch|none|X.Y.Z>"
     echo "  major - Bump major version (1.0.0 -> 2.0.0)"
     echo "  minor - Bump minor version (1.0.0 -> 1.1.0)"
     echo "  patch - Bump patch version (1.0.0 -> 1.0.1)"
     echo "  none  - No version bump (just create zip)"
+    echo "  X.Y.Z - Set explicit version (e.g., 2.3.0)"
     exit 1
 fi
 
 RELEASE_TYPE="$1"
+EXPLICIT_VERSION=""
 
-if [[ "$RELEASE_TYPE" != "major" && "$RELEASE_TYPE" != "minor" && "$RELEASE_TYPE" != "patch" && "$RELEASE_TYPE" != "none" ]]; then
+# Check if argument is an explicit version number (X.Y.Z format)
+if [[ "$RELEASE_TYPE" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+    EXPLICIT_VERSION="$RELEASE_TYPE"
+    RELEASE_TYPE="explicit"
+elif [[ "$RELEASE_TYPE" != "major" && "$RELEASE_TYPE" != "minor" && "$RELEASE_TYPE" != "patch" && "$RELEASE_TYPE" != "none" ]]; then
     echo "Error: Invalid release type '$RELEASE_TYPE'"
-    echo "Must be one of: major, minor, patch, none"
+    echo "Must be one of: major, minor, patch, none, or X.Y.Z version"
     exit 1
 fi
 
@@ -57,6 +63,8 @@ echo "Current version: $CURRENT_VERSION"
 if [ "$RELEASE_TYPE" = "none" ]; then
     NEW_VERSION="$CURRENT_VERSION"
     echo "Skipping version bump"
+elif [ "$RELEASE_TYPE" = "explicit" ]; then
+    NEW_VERSION="$EXPLICIT_VERSION"
 else
     # Parse version components (major.minor or major.minor.patch)
     IFS='.' read -ra VERSION_PARTS <<< "$CURRENT_VERSION"
@@ -119,6 +127,19 @@ echo "Created $ZIP_NAME with version $NEW_VERSION"
 if [ "$RELEASE_TYPE" != "none" ]; then
     git add "$MANIFEST"
     git commit -m "chore: Bump version to $NEW_VERSION"
-    git tag "v$NEW_VERSION"
-    echo "Committed version bump and created git tag v$NEW_VERSION"
+
+    # Check if tag already exists
+    if git tag -l "v$NEW_VERSION" | grep -q "v$NEW_VERSION"; then
+        echo "Warning: Tag v$NEW_VERSION already exists."
+        read -p "Do you want to overwrite the existing tag? (y/N): " CONFIRM
+        if [[ "$CONFIRM" =~ ^[Yy]$ ]]; then
+            git tag -f "v$NEW_VERSION"
+            echo "Overwrote git tag v$NEW_VERSION"
+        else
+            echo "Skipped tagging. Commit was created but tag was not updated."
+        fi
+    else
+        git tag "v$NEW_VERSION"
+        echo "Created git tag v$NEW_VERSION"
+    fi
 fi
