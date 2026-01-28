@@ -3,25 +3,25 @@ Better Bogleheads improves your browsing experience on the Bogleheads.org home p
 FEATURES
 
 Zebra Striping
-Add alternating row colors to the thread list for easier reading. Choose any color you like.
+Add alternating row colors to the topic list for easier reading. Choose any color you like.
 
-Hide Read Threads
-Automatically tracks threads you've clicked and lets you hide them. Threads reappear when new replies are posted, so you never miss new activity.
+Hide Read Topics
+Automatically tracks topics you've clicked and lets you hide them. Topics reappear when new replies are posted, so you never miss new activity.
 
 Unread Badge
-Shows the count of unread threads on the extension icon. The badge color changes based on how many unread threads you have: green (1-20), yellow (21-60), or red (61+).
+Shows the count of unread topics on the extension icon. The badge color changes based on how many unread topics you have: green (1-20), yellow (21-60), or red (61+).
 
 Highlight Hot Topics
-Make popular threads stand out by highlighting threads above a customizable reply threshold. Choose your own highlight color.
+Make popular topics stand out by highlighting topics above a customizable reply threshold. Choose your own highlight color.
 
-Hide Old Threads
-Filter out threads older than a specified number of days to focus on recent discussions.
+Hide Old Topics
+Filter out topics older than a specified number of days to focus on recent discussions.
 
 Adjustable Font Size
-Increase or decrease the thread list font size from 50% to 200% for comfortable reading.
+Increase or decrease the topic list font size from 50% to 200% for comfortable reading.
 
 Pointer Cursor
-Enable a pointer cursor when hovering over thread rows to make them feel more clickable.
+Enable a pointer cursor when hovering over topic rows to make them feel more clickable.
 
 Time Tracking
 See how much time you spend on Bogleheads.org. The side panel displays today's time, all-time total, and a sparkline graph showing your activity over the last 30 days. Reset anytime to start fresh.
@@ -33,7 +33,7 @@ Type "bh" in Chrome's address bar, press Tab, then use these shortcuts:
 • zebra / zebra off - Toggle zebra striping
 • font inc / font dec - Adjust font size
 • reset - Clear read history
-• #12345 - Go to thread by ID
+• #12345 - Go to topic by ID
 • user:alice - Search posts by user
 • "search term" - Search the forum
 

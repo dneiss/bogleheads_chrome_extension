@@ -37,12 +37,12 @@ chrome.omnibox.onInputChanged.addListener(function(text, suggest) {
     }
   });
 
-  // Thread ID pattern
+  // Topic ID pattern
   if (input.startsWith('#') || /^\d/.test(input)) {
     var id = input.replace('#', '');
     suggestions.push({
       content: '#' + id,
-      description: '#' + id + ' - Go to thread ' + id
+      description: '#' + id + ' - Go to topic ' + id
     });
   }
 
@@ -111,7 +111,7 @@ chrome.omnibox.onInputEntered.addListener(function(text) {
 
   // reset → clear read history
   if (inputLower === 'reset') {
-    chrome.storage.sync.set({ readThreads: {} });
+    chrome.storage.sync.set({ readTopics: {} });
     return;
   }
 

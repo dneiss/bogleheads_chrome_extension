@@ -15,13 +15,13 @@ This extension does **not** collect, transmit, or share any personal data.
 The extension stores the following preferences locally on your device using Chrome's built-in storage API (chrome.storage.sync):
 
 - Stripe color preference
-- Hide read threads setting (on/off)
-- List of thread IDs you have clicked (to track read threads)
+- Hide read topics setting (on/off)
+- List of topic IDs you have clicked (to track read topics)
 - Highlight hot topics setting (on/off)
 - Hot topic reply threshold
 - Hot topic highlight color
-- Hide old threads setting (on/off)
-- Maximum thread age preference
+- Hide old topics setting (on/off)
+- Maximum topic age preference
 - Font size preference
 - Panel collapsed state
 - Panel position (if dragged)

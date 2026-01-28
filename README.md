@@ -4,13 +4,13 @@ A Chrome extension that enhances the [Bogleheads.org](https://www.bogleheads.org
 
 ## Features
 
-- **Unread Badge** - Shows a red badge on the extension icon with the count of threads you haven't clicked yet
+- **Unread Badge** - Shows a red badge on the extension icon with the count of topics you haven't clicked yet
 - **Zebra Striping** - Alternating row colors for easier reading (customizable color)
-- **Hide Read Threads** - Automatically tracks threads you've clicked and can hide them. Threads reappear when new replies are posted.
-- **Highlight Hot Topics** - Highlight threads with many replies (customizable threshold and color)
-- **Hide Old Threads** - Filter out threads older than a specified number of days
-- **Adjustable Font Size** - Increase or decrease the thread list font size (50% - 200%)
-- **Pointer Cursor** - Optional pointer cursor when hovering over thread rows
+- **Hide Read Topics** - Automatically tracks topics you've clicked and can hide them. Topics reappear when new replies are posted.
+- **Highlight Hot Topics** - Highlight topics with many replies (customizable threshold and color)
+- **Hide Old Topics** - Filter out topics older than a specified number of days
+- **Adjustable Font Size** - Increase or decrease the topic list font size (50% - 200%)
+- **Pointer Cursor** - Optional pointer cursor when hovering over topic rows
 - **Time Tracking** - Tracks time spent on the site with today's time, all-time total, and a 30-day sparkline graph
 
 All settings are saved and persist across sessions.

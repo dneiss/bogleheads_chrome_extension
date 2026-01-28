@@ -38,8 +38,8 @@
   var timeStatsEl = document.getElementById('time-stats');
   var resetTimeButton = document.getElementById('reset-time');
 
-  function updateReadCount(readThreads) {
-    var count = Object.keys(readThreads).length;
+  function updateReadCount(readTopics) {
+    var count = Object.keys(readTopics).length;
     readCountSpan.textContent = '(' + count + ' read)';
   }
 
@@ -147,11 +147,11 @@
   }
 
   // Load saved settings and apply to UI
-  chrome.storage.sync.get(['stripeColor', 'hideRead', 'readThreads', 'highlightHot', 'hotThreshold', 'hotColor', 'fontSize', 'hideOld', 'maxAgeDays', 'pointerCursor'], function(result) {
+  chrome.storage.sync.get(['stripeColor', 'hideRead', 'readTopics', 'highlightHot', 'hotThreshold', 'hotColor', 'fontSize', 'hideOld', 'maxAgeDays', 'pointerCursor'], function(result) {
     var color = result.stripeColor || DEFAULT_COLOR;
     var hideRead = result.hideRead || false;
-    var readThreads = result.readThreads || {};
-    if (Array.isArray(readThreads)) readThreads = {};
+    var readTopics = result.readTopics || {};
+    if (Array.isArray(readTopics)) readTopics = {};
     var highlightHot = result.highlightHot || false;
     var hotThreshold = result.hotThreshold || DEFAULT_HOT_THRESHOLD;
     var hotColor = result.hotColor || DEFAULT_HOT_COLOR;
@@ -169,7 +169,7 @@
     maxAgeDaysInput.value = maxAgeDays;
     pointerCursorCheckbox.checked = pointerCursor;
     applyFontSizeDisplay(fontSize);
-    updateReadCount(readThreads);
+    updateReadCount(readTopics);
   });
 
   // Load time tracking data
@@ -180,10 +180,10 @@
   // Listen for storage changes (e.g., read count updates from content script)
   chrome.storage.onChanged.addListener(function(changes, namespace) {
     if (namespace !== 'sync') return;
-    if (changes.readThreads) {
-      var readThreads = changes.readThreads.newValue || {};
-      if (Array.isArray(readThreads)) readThreads = {};
-      updateReadCount(readThreads);
+    if (changes.readTopics) {
+      var readTopics = changes.readTopics.newValue || {};
+      if (Array.isArray(readTopics)) readTopics = {};
+      updateReadCount(readTopics);
     }
     if (changes.theme) {
       applyTheme(changes.theme.newValue || 'light');
@@ -250,8 +250,8 @@
   };
 
   clearReadButton.onclick = function() {
-    if (confirm('This will reset all threads to unread. Threads you previously viewed will no longer be hidden. Continue?')) {
-      chrome.storage.sync.set({ readThreads: {} });
+    if (confirm('This will reset all topics to unread. Topics you previously viewed will no longer be hidden. Continue?')) {
+      chrome.storage.sync.set({ readTopics: {} });
       updateReadCount({});
     }
   };

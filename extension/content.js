@@ -149,6 +149,14 @@
   function init() {
     table = document.getElementById('posts_table');
 
+    // Migrate readThreads to readTopics (one-time)
+    chrome.storage.sync.get(['readThreads', 'readTopics'], function(result) {
+      if (result.readThreads && !result.readTopics) {
+        chrome.storage.sync.set({ readTopics: result.readThreads });
+        chrome.storage.sync.remove('readThreads');
+      }
+    });
+
     // Apply theme on load
     chrome.storage.sync.get(['theme'], function(result) {
       applyTheme(result.theme || 'light');
@@ -160,18 +168,18 @@
     if (!table) return;
 
     // Load settings and apply initial state
-    chrome.storage.sync.get(['stripeColor', 'hideRead', 'readThreads', 'highlightHot', 'hotThreshold', 'hotColor', 'fontSize', 'hideOld', 'maxAgeDays', 'pointerCursor'], function(result) {
+    chrome.storage.sync.get(['stripeColor', 'hideRead', 'readTopics', 'highlightHot', 'hotThreshold', 'hotColor', 'fontSize', 'hideOld', 'maxAgeDays', 'pointerCursor'], function(result) {
       currentColor = result.stripeColor || DEFAULT_COLOR;
-      var readThreads = result.readThreads || {};
-      if (Array.isArray(readThreads)) readThreads = {};
+      var readTopics = result.readTopics || {};
+      if (Array.isArray(readTopics)) readTopics = {};
       var fontSize = result.fontSize || DEFAULT_FONT_SIZE;
       var pointerCursor = result.pointerCursor || false;
 
       applyFontSize(fontSize);
       applyPointerCursor(pointerCursor);
-      applyFilters(readThreads);
-      trackClicks(readThreads);
-      updateBadge(readThreads);
+      applyFilters(readTopics);
+      trackClicks(readTopics);
+      updateBadge(readTopics);
     });
   }
 
@@ -182,7 +190,7 @@
     });
   }
 
-  function getThreadId(row) {
+  function getTopicId(row) {
     var link = row.querySelector('td a[href*="viewtopic.php"]');
     if (link) {
       var match = link.href.match(/t=(\d+)/);
@@ -210,7 +218,7 @@
     return 0;
   }
 
-  function getThreadAgeDays(row) {
+  function getTopicAgeDays(row) {
     var cells = row.querySelectorAll('td.NoMobile');
     for (var i = 0; i < cells.length; i++) {
       var cell = cells[i];
@@ -221,8 +229,8 @@
         if (yearMatch) {
           var year = parseInt(yearMatch[1], 10);
           var now = new Date();
-          var threadDate = new Date(year, 0, 1);
-          var diffDays = Math.floor((now - threadDate) / (1000 * 60 * 60 * 24));
+          var topicDate = new Date(year, 0, 1);
+          var diffDays = Math.floor((now - topicDate) / (1000 * 60 * 60 * 24));
           return diffDays;
         }
         var dateMatch = text.match(/^(\d{1,2})\/(\d{1,2})$/);
@@ -231,11 +239,11 @@
           var day = parseInt(dateMatch[2], 10);
           var now = new Date();
           var year = now.getFullYear();
-          var threadDate = new Date(year, month, day);
-          if (threadDate > now) {
-            threadDate = new Date(year - 1, month, day);
+          var topicDate = new Date(year, month, day);
+          if (topicDate > now) {
+            topicDate = new Date(year - 1, month, day);
           }
-          var diffDays = Math.floor((now - threadDate) / (1000 * 60 * 60 * 24));
+          var diffDays = Math.floor((now - topicDate) / (1000 * 60 * 60 * 24));
           return diffDays;
         }
         var timeMatch = text.match(/^(\d{1,2}):(\d{2})$/);
@@ -261,13 +269,13 @@
     });
   }
 
-  function updateBadge(readThreads) {
+  function updateBadge(readTopics) {
     if (!table) return;
     var rows = getDataRows();
     var unreadCount = 0;
     for (var i = 0; i < rows.length; i++) {
-      var threadId = getThreadId(rows[i]);
-      if (threadId && !readThreads[threadId]) {
+      var topicId = getTopicId(rows[i]);
+      if (topicId && !readTopics[topicId]) {
         unreadCount++;
       }
     }
@@ -305,7 +313,7 @@
     });
   }
 
-  function applyFilters(readThreads) {
+  function applyFilters(readTopics) {
     if (!table) return;
 
     chrome.storage.sync.get(['hideRead', 'hideOld', 'maxAgeDays', 'stripeColor'], function(result) {
@@ -319,15 +327,15 @@
         var shouldHide = false;
 
         if (hideRead) {
-          var threadId = getThreadId(row);
+          var topicId = getTopicId(row);
           var lastPostId = getLastPostId(row);
-          var savedPostId = threadId ? readThreads[threadId] : null;
+          var savedPostId = topicId ? readTopics[topicId] : null;
           var isFullyRead = savedPostId && savedPostId === lastPostId;
           if (isFullyRead) shouldHide = true;
         }
 
         if (hideOld && !shouldHide) {
-          var ageDays = getThreadAgeDays(row);
+          var ageDays = getTopicAgeDays(row);
           if (ageDays > maxAgeDays) shouldHide = true;
         }
 
@@ -338,7 +346,7 @@
     });
   }
 
-  function trackClicks(readThreads) {
+  function trackClicks(readTopics) {
     var rows = getDataRows();
     rows.forEach(function(row) {
       var links = row.querySelectorAll('td a[href*="viewtopic.php"]');
@@ -346,12 +354,12 @@
         if (link.dataset.tracked) return;
         link.dataset.tracked = 'true';
         link.addEventListener('click', function() {
-          var threadId = getThreadId(row);
+          var topicId = getTopicId(row);
           var lastPostId = getLastPostId(row);
-          if (threadId && lastPostId) {
-            readThreads[threadId] = lastPostId;
-            chrome.storage.sync.set({ readThreads: readThreads });
-            updateBadge(readThreads);
+          if (topicId && lastPostId) {
+            readTopics[topicId] = lastPostId;
+            chrome.storage.sync.set({ readTopics: readTopics });
+            updateBadge(readTopics);
           }
         });
       });
@@ -365,10 +373,10 @@
     } else if (message.type === 'applyStripes') {
       applyStripes();
     } else if (message.type === 'applyFilters') {
-      chrome.storage.sync.get(['readThreads'], function(result) {
-        var readThreads = result.readThreads || {};
-        if (Array.isArray(readThreads)) readThreads = {};
-        applyFilters(readThreads);
+      chrome.storage.sync.get(['readTopics'], function(result) {
+        var readTopics = result.readTopics || {};
+        if (Array.isArray(readTopics)) readTopics = {};
+        applyFilters(readTopics);
       });
     } else if (message.type === 'fontSize') {
       applyFontSize(message.value);
@@ -399,12 +407,12 @@
     if (changes.highlightHot || changes.hotThreshold || changes.hotColor) {
       applyStripes();
     }
-    if (changes.hideRead || changes.hideOld || changes.maxAgeDays || changes.readThreads) {
-      chrome.storage.sync.get(['readThreads'], function(result) {
-        var readThreads = result.readThreads || {};
-        if (Array.isArray(readThreads)) readThreads = {};
-        applyFilters(readThreads);
-        updateBadge(readThreads);
+    if (changes.hideRead || changes.hideOld || changes.maxAgeDays || changes.readTopics) {
+      chrome.storage.sync.get(['readTopics'], function(result) {
+        var readTopics = result.readTopics || {};
+        if (Array.isArray(readTopics)) readTopics = {};
+        applyFilters(readTopics);
+        updateBadge(readTopics);
       });
     }
   });
