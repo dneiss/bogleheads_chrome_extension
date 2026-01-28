@@ -116,7 +116,8 @@
       }
     }
 
-    sparklineEl.innerHTML = '<svg viewBox="0 0 ' + svgWidth + ' ' + svgHeight + '" preserveAspectRatio="none">' + bars + '</svg>';
+    var baseline = '<line class="sparkline-baseline" x1="0" y1="' + (svgHeight - 2) + '" x2="' + svgWidth + '" y2="' + (svgHeight - 2) + '" />';
+    sparklineEl.innerHTML = '<svg viewBox="0 0 ' + svgWidth + ' ' + svgHeight + '" preserveAspectRatio="none">' + baseline + bars + '</svg>';
   }
 
   function updateTimeDisplay(tracking) {

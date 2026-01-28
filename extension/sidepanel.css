@@ -240,6 +240,15 @@ body.bh-dark .sparkline-bar.sparkline-empty {
   fill: #555;
 }
 
+.sparkline-baseline {
+  stroke: #ccc;
+  stroke-width: 1;
+}
+
+body.bh-dark .sparkline-baseline {
+  stroke: #555;
+}
+
 body.bh-dark .time-stats {
   color: #a0aec0;
 }
